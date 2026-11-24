@@ -1,13 +1,36 @@
-import { useState } from "react";
+import {useRef} from "react";
+import emailjs from "@emailjs/browser";
+
 
 function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const form =useRef();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setSubmitted(true);
-    event.currentTarget.reset();
+  const sendEmail =(e) => {
+e.preventDefault();
+
+emailjs
+ .sendForm(
+  "service_lcvy46y",
+  "template_smumelw",
+   form.current,
+   {
+    publicKey: "Pl9O2L519aJgZMZWx",
+    
+   }
+ )
+ .then(
+  () =>{
+    alert("Message sent successfully!");
+    e.target.reset();
+  },
+  (error) => {
+     console.log(error);
+     alert("Failed to send message. Please try again.");
+  }
+ );
+
   };
+
 
   return (
     <div className="contact-page">
@@ -33,17 +56,21 @@ function Contact() {
           </div>
         </div>
 
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form ref={form}
+          onSubmit={sendEmail}
+          className="contact-form">
+        
+       
           <h2>Send Us a Message</h2>
 
-          <input type="text" placeholder="Your Name" />
-          <input type="email" placeholder="Your Email" />
-          <input type="text" placeholder="Subject" />
-          <textarea placeholder="Your Message"></textarea>
+          <input type="text" name ="name" placeholder="Your Name" required/>
+          <input type="email" name="email" placeholder="Your Email" required/>
+          <input type="text" name="subject"  placeholder="Subject" required/>
+          <textarea name="message" placeholder="Your Message" required></textarea>
 
           <button type="submit">Send Message</button>
-          {submitted && <p className="form-success">Thanks! We will get back to you soon.</p>}
-        </form>
+          </form>
+        
 
       </section>
 

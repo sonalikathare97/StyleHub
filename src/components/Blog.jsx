@@ -8,12 +8,12 @@ function Blog() {
     {
       title: "How to Style Your Outfit",
       text: "Simple styling ideas to create beautiful outfits for every occasion.",
-      image: "/images/blog1.jpg"
+      image: "/images/blog2.jpg"
     },
     {
       title: "Build Your Perfect Wardrobe",
       text: "Discover useful tips for choosing stylish and versatile clothes.",
-      image: "/images/blog1.jpg"
+      image: "/images/blog3.jpg"
     }
   ];
 

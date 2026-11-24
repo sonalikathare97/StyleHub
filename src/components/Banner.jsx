@@ -6,28 +6,41 @@ function Banner() {
   const [isTransitioning, setIsTransitioning] = useState(true);
 
   const slides = [
-    "/images/banner1.jpg",
-    "/images/banner1.jpg",
-    "/images/banner1.jpg"
+    {
+      image: "/images/banner1.jpg",
+      tag: "NEW SEASON COLLECTION",
+      title: "ELEVATE YOUR STYLE",
+      offer: "UP TO 50% OFF",
+      description: "Discover timeless fashion and redefine your everyday look."
+    },
+    {
+      image: "/images/banner1.jpg",
+      tag: "FRESH FASHION ARRIVALS",
+      title: "DRESS YOUR BEST",
+      offer: "SPECIAL OFFERS",
+      description: "Find your favourites and make every outfit memorable."
+    },
+    {
+      image: "/images/banner1.jpg",
+      tag: "EXCLUSIVE COLLECTION",
+      title: "YOUR STYLE, YOUR STORY",
+      offer: "SHOP THE LATEST",
+      description: "Explore new styles made for every occasion."
+    }
   ];
 
   useEffect(() => {
     const timer = setInterval(() => {
-
-      if (currentSlide === 2) {
-        // Go from Slide 3 back to Slide 1 without animation
+      if (currentSlide === slides.length - 1) {
         setIsTransitioning(false);
         setCurrentSlide(0);
 
-        // Turn animation back on
         setTimeout(() => {
           setIsTransitioning(true);
         }, 50);
-
       } else {
-        setCurrentSlide((prev) => prev + 1);
+        setCurrentSlide(prev => prev + 1);
       }
-
     }, 3000);
 
     return () => clearInterval(timer);
@@ -35,7 +48,6 @@ function Banner() {
 
   return (
     <section className="banner" id="home">
-
       <div className="banner-slider">
 
         <div
@@ -47,31 +59,36 @@ function Banner() {
               : "none"
           }}
         >
-
-          {slides.map((image, index) => (
+          {slides.map((slide, index) => (
             <div className="slide" key={index}>
 
               <div className="banner-content">
-                <h1>STYLE THAT SPEAKS</h1>
+                <span className="banner-tag">
+                  {slide.tag}
+                </span>
 
-                <p>
-                  Discover the latest fashion trends and find your perfect style.
-                </p>
-                <button>
-                <Link className="banner-cta" to="/products">SHOP NOW </Link>
-                </button>
+                <h1>{slide.title}</h1>
+
+                <h2 className="banner-offer">
+                  {slide.offer}
+                </h2>
+
+                <p>{slide.description}</p>
+
+                <Link className="banner-cta" to="/products">
+                  SHOP NOW <span>→</span>
+                </Link>
               </div>
 
               <div className="banner-image">
                 <img
-                  src={image}
-                  alt="Fashion Collection"
+                  src={slide.image}
+                  alt="StyleHub Fashion Collection"
                 />
               </div>
 
             </div>
           ))}
-
         </div>
 
         <div className="dots">
@@ -79,20 +96,17 @@ function Banner() {
             <span
               key={index}
               className={
-                currentSlide === index
-                  ? "dot active"
-                  : "dot"
+                currentSlide === index ? "dot active" : "dot"
               }
               onClick={() => {
                 setIsTransitioning(true);
                 setCurrentSlide(index);
               }}
-            ></span>
+            />
           ))}
         </div>
 
       </div>
-
     </section>
   );
 }
